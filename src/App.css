@@ -1,38 +1,57 @@
-.App {
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Shade&family=DM+Mono:wght@300&family=DM+Sans:wght@700&display=swap');
+
+*, :root {
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  font-family: 'DM Mono', monospace;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+  a:hover {
+    box-shadow: 10px 10px 5px #3838385f;
+      transform: translate(-0.1rem, -0.1rem);
+  }
+  a:active {
+    transform: scale(0.99);
+  }
+
+body {
+  margin: 0;
+  padding: 0;
+  background-image: 
+    linear-gradient(#FFD65A 0.25rem, transparent 0.25rem), 
+    linear-gradient(90deg, #FFD65A 0.25rem, transparent 0.25rem);
+  background-color: #FFE591;
+  background-size: 5rem 5rem;
+}
+
+.title {
+  font-family: 'Bungee Shade', cursive;
+  color: #3B4C60;
+  border: 0.5rem solid #3B4C60;
+  margin: 0.6rem;
+  margin-bottom: 0;
   text-align: center;
+  font-size: 2.5rem;
+  background-color: #FCFCFC;
+  line-height: 4rem;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+.card-list {
+  margin: 1rem;
+  display: grid;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  grid-template-columns: repeat(auto-fill, minmax(500px, 1fr)); 
+  gap: 1rem;
 }
 
-.App-link {
-  color: #61dafb;
+.card-drag-handle:hover{
+  cursor: move;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
