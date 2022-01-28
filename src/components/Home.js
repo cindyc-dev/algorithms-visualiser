@@ -5,8 +5,12 @@ export default function Home() {
     <div>
       <div className='title'>ALGORITHMS VISUALISER</div>
       <div className='card-list'>
-        <a href="/#/sorting"><Card colour='orange' header='SORTING' draggable={false} /></a>
-        <a href="/#/pattern-search"><Card colour='pink' header='PATTERN/STRING SEARCH' draggable={false} /></a>
+        <a href="/algorithms-visualiser/#/sorting">
+          <Card colour='orange' header='SORTING' />
+        </a>
+        <a href="/algorithms-visualiser/#/pattern-search">
+          <Card colour='pink' header='PATTERN/STRING SEARCH' />
+        </a>
       </div>
       
     </div>

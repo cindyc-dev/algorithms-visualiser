@@ -55,3 +55,21 @@ body {
   cursor: move;
 }
 
+.controls-container {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Sorting */
+.bars {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
+  justify-content: center;
+  text-align: center;
+}
+
+/* 
+
+
+*/
