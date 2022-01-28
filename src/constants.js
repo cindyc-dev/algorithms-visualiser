@@ -53,7 +53,7 @@ const colourMap ={
       background: '#FDAC6A',
       border: '#F77052'
     }
-  }
+  },
 }
 
 // ResponsiveGridLayout constants

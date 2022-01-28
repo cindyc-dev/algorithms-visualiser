@@ -18,8 +18,10 @@
   * `react`
   * `react-dom`
   * `react-scripts`
-  * [`react-icons`](https://www.npmjs.com/package/react-router)
-  * [``]
+  * [`react-icons`]()
+  * [`gh-pages`]() for deployment to github pages
+  * [`react-grid-layout`]() for movement and resizing of cards
+  * [`react-redux`]() for state management
 
 ## 🎯 Challenges I ran into
 * found out that GitHub pages doesn't work with `react-router` so I had to create a custom routing solution (and learnt about hashed URLs on the way!)

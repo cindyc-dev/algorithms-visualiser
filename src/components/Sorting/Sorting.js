@@ -6,15 +6,14 @@ import SortingVisual from './SortingVisual';
 import InsertionSort from './Algorithms/InsertionSort'
 import Quicksort from './Algorithms/Quicksort';
 import SelectionSort from './Algorithms/SelectionSort'
-import { overrideSteps } from '../../redux/stepsSlice';
-import { useDispatch, useSelector } from 'react-redux';
+import SliderInput from '../Input/SliderInput';
+import TextInput from '../Input/TextInput';
+import ButtonInput from '../Input/ButtonInput';
+import { FaPlay } from 'react-icons/fa'
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 export default function Sorting() {
-  // Redux
-  const dispatch = useDispatch();
-
   // States
   const [alg, setAlg] = useState("Insertion Sort")
   const [len, setLen] = useState(10)
@@ -24,8 +23,7 @@ export default function Sorting() {
   const [swap, setSwap] = useState([])
   const [sortedIndexes, setSortedIndex] = useState([])
   const [currStep, setCurrStep] = useState(0);
-  const steps = useSelector((state) => state.steps);
-  
+  const [barsTemp, setBarsTemp] = useState([]);
 
   /* Generates new shuffled array and resets compare, swap and sortedIndexes 
       arrays.
@@ -36,13 +34,10 @@ export default function Sorting() {
     setSortedIndex([])
 
     // Creates array [1 ... len]
-    // let randomArray = Array(length).fill(null).map((_, i) => i+1);
-    // [0, 1, 2, 3, 4, 5]
     let randomArray = Array(length).fill(1);
     console.log(`  1 array: ${randomArray}`)
     for (let k = 0; k < length; k++) {
       randomArray[k] = k+1;
-    //   console.log(`    len: ${len} | k: ${k}| ${randomArray}`)
     }
     console.log(`  ${randomArray}`)
 
@@ -53,29 +48,20 @@ export default function Sorting() {
     return randomArray
   }
 
-  // function copyArrayOfArrays(original) {
-  //   let copy = [];
-  //   original.forEach((subArray) => {
-  //     copy.push(subArray.slice());
-  //   });
-  // }
-
   // SECTION Animating and Steps
   /* When 'Start Sorting' is clicked, calls appropriate sorting function,
-      which returns an animation order array, `order`, containing:
-          - j and k: 
-          - bars: array of bar values
-          - index: 
+    which returns an animation order array, `order`, containing:
+      - j and k: 
+      - bars: array of bar values
+      - index: 
   */
   function handleSubmit(event) {
     const sleep = (ms) => {
       return new Promise(resolve => setTimeout(resolve, ms))
     }
 
-    const animateAccOrder = async () => {
+    const animateAccOrder = async (steps) => {
       console.log(`ANIMATE ORDER STEPS: ${JSON.stringify(steps)}`);
-      // console.log(`equal: ${steps === stepsArr} | steps ${JSON.stringify(stepsArr)}`);
-      // console.log(`isAnimationPlaying: ${isAnimationPlaying}`)
       for (let i = 0; i < steps.length; i++) {
         const [j, k, bars, index] = steps[i];
         setCurrStep(i);
@@ -98,7 +84,6 @@ export default function Sorting() {
         await sleep(speed)
       }
     }
-
     event.preventDefault()
 
     // using .slice() to pass in a copy of `bars`
@@ -110,8 +95,7 @@ export default function Sorting() {
     } else if (alg === "Quicksort") {
       result = Quicksort(bars.slice());
     }
-    dispatch(overrideSteps({steps: [...result]}));
-    animateAccOrder();
+    animateAccOrder(result);
   }
 
   function prevStep() {
@@ -140,7 +124,33 @@ export default function Sorting() {
         draggableHandle='.card-drag-handle'
       >
         <div key='input'>
-          <Card colour='orange' header='input'/>
+          <Card
+            colour='orange'
+            header='input'
+            child={
+              <div className='inputs'>
+                <SliderInput
+                  label='length'
+                  min={3}
+                  max={40}
+                  step={1}
+                  val={len}
+                  setVal={setLen}
+                />
+                <TextInput
+                  label='array'
+                  placeholder='3, 2, 1, ...'
+                  val={barsTemp}
+                  setVal={setBarsTemp}
+                />
+                <ButtonInput
+                  label='GENERATE'
+                  handleClick={() => setBars([...generateShuffledArray(len)])}
+                  colour='dark-blue'
+                />
+              </div>
+            }
+          />
         </div>
         <div key='cases'>
           <Card colour='red' header='cases'/>
@@ -150,28 +160,21 @@ export default function Sorting() {
             colour='pink'
             header='controls'
             child={
-              <div className='controls-container'>
-                <button onClick={prevStep}>prev</button>
-                {currStep}
-                <button onClick={nextStep}>next</button>
-                <button onClick={handleSubmit}>play</button>
-                <button onClick={() => setBars([...generateShuffledArray(len)])}>generate</button>
-                <input
-                  type='range'
-                  min={3}
-                  max={40}
-                  step={1}
-                  value={len}
-                  onChange={e => setLen(e.target.value)}
-                ></input>
-                <input
-                  type='range'
+              <div className='controls'>
+                <SliderInput
+                  label='speed'
                   min={10}
                   max={100}
                   step={1}
-                  value={speed}
-                  onChange={e => setSpeed(e.target.value)}
-                ></input>
+                  val={speed}
+                  setVal={setSpeed}
+                />
+                <ButtonInput
+                  label='PLAY'
+                  handleClick={handleSubmit}
+                  colour='green'
+                  icon={<FaPlay className='icon' />}
+                />
                 <select onChange={e => setAlg(e.target.value)}>
                   <option value='Insertion Sort'>Insertion Sort</option>
                   <option value='Quicksort'>Quicksort</option>

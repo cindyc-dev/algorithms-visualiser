@@ -44,8 +44,8 @@ export default function Visual({ bars, compare, sorted, swap, coloursMap }) {
           return (
             <div
               key={index}
-                style={style}
-              >
+              style={style}
+            >
             </div>
           )
         })}
