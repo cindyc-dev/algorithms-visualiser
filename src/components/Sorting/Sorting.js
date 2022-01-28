@@ -4,8 +4,27 @@ import Card from '../Card';
 import { Responsive, WidthProvider } from "react-grid-layout";
 import SortingVisual from './SortingVisual';
 import InsertionSort from './Algorithms/InsertionSort'
+import Quicksort from './Algorithms/Quicksort';
+import SelectionSort from './Algorithms/SelectionSort'
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
+
+function useSlider (min, max, defaultValue, step, value, setValue) {
+  function handleChange(e) {
+    setValue(e.target.value);
+  }
+
+  const props = {
+    type: 'range',
+    min,
+    max,
+    step: step,
+    value: value,
+    onChange: handleChange
+  };
+
+  return props;
+}
 
 export default function Sorting() {
   // States
@@ -21,28 +40,30 @@ export default function Sorting() {
   /* Generates new shuffled array and resets compare, swap and sortedIndexes 
       arrays.
   */
-  function generateShuffledArray(len) {
+  function generateShuffledArray(length) {
     setCompare([])
     setSwap([])
     setSortedIndex([])
 
     // Creates array [1 ... len]
-    const randomArray = Array.from(Array(len + 1).keys()).slice(1)
+    // let randomArray = Array(length).fill(null).map((_, i) => i+1);
+    // [0, 1, 2, 3, 4, 5]
+    let randomArray = Array(length).fill(1);
+    console.log(`  1 array: ${randomArray}`)
+    for (let k = 0; k < length; k++) {
+      randomArray[k] = k+1;
+    //   console.log(`    len: ${len} | k: ${k}| ${randomArray}`)
+    }
+    console.log(`  ${randomArray}`)
 
     // Shuffle the array
-    for (let i = len-1; i > 0; i--) {
-      // generate a random index
-      const j = Math.floor(Math.random() * (i+1))
+    randomArray.sort(() => Math.random() - 0.5);
 
-      // swap
-      var temp = randomArray[i];
-      randomArray[i] = randomArray[j];
-      randomArray[j] = temp;
-    }
-
+    console.log(`  randomArray: ${randomArray} | len: ${length}`)
     return randomArray
   }
 
+  // SECTION Animating and Steps
   /* When 'Start Sorting' is clicked, calls appropriate sorting function,
       which returns an animation order array, `order`, containing:
           - j and k: 
@@ -55,6 +76,7 @@ export default function Sorting() {
     }
 
     const animateAccOrder = async (steps) => {
+      console.log(`ANIMATE ORDER STEPS: ${JSON.stringify(steps)}`)
       setAnimPlaying(true)
       for (let i = 0; i < steps.length; i++) {
         const [j, k, bars, index] = steps[i]
@@ -83,10 +105,11 @@ export default function Sorting() {
     // using .slice() to pass in a copy of `bars`
     if (alg === "Insertion Sort") {
       animateAccOrder(InsertionSort(bars.slice()))
+      
     } else if (alg === "Selection Sort") {
-      // animateAccOrder(SelectionSort(bars.slice()))
+      animateAccOrder(SelectionSort(bars.slice()))
     } else if (alg === "Quicksort") {
-      // animateAccOrder(Quicksort(bars.slice()))
+      animateAccOrder(Quicksort(bars.slice()))
     }
   }
 
@@ -101,6 +124,7 @@ export default function Sorting() {
   /* Generate random array every time the length or algorithm is changed
   */
   useEffect(() => {
+    console.log(`useEffect`)
     setBars([...generateShuffledArray(len)])
   }, [len, alg])
 
@@ -129,7 +153,21 @@ export default function Sorting() {
                 <button onClick={prevStep}>prev</button>
                 {}
                 <button onClick={nextStep}>next</button>
-                <button onClick={generateShuffledArray}>generate</button>
+                <button onClick={handleSubmit}>play</button>
+                <button onClick={() => setBars([...generateShuffledArray(len)])}>generate</button>
+                <input
+                  type='range'
+                  min={3}
+                  max={40}
+                  step={1}
+                  value={len}
+                  onChange={e => setLen(e.target.value)}
+                ></input>
+                <select onChange={e => setAlg(e.target.value)}>
+                  <option value='Insertion Sort'>Insertion Sort</option>
+                  <option value='Quicksort'>Quicksort</option>
+                  <option value='Selection Sort'>Selection Sort</option>
+                </select>
               </div>
             }
           />
@@ -140,10 +178,11 @@ export default function Sorting() {
             header='visualisation' 
             child={ 
             <SortingVisual
-            bars={bars}
-            compare={compare}
-            swap={swap}
-            sorted={sortedIndexes}
+              bars={bars}
+              compare={compare}
+              swap={swap}
+              sorted={sortedIndexes}
+              coloursMap={sortingColoursMap}
             />
           }/>
         </div>

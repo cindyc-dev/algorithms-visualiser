@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react'
 
-export default function SortingVisual({ bars, coloursMap }) {
+export default function Visual({ bars, compare, sorted, swap, coloursMap }) {
   const [containerHeight, setContainerHeight] = useState(100);
   const [containerWidth, setContainerWidth] = useState(100);
 
@@ -12,24 +12,43 @@ export default function SortingVisual({ bars, coloursMap }) {
   
   const barWidth = bars.length * containerWidth - 125
 
-  return (
-    <div className='bars-container'>
-      {bars.map((bar, index) => {
-        const style = {
-          border: `0.3rem solid ${coloursMap[bar.state].border}`,
-          width: barWidth,
-          height: `${(bar.height / bars.length) * containerHeight - 100}px`,
-          background: coloursMap[bar.state].background
-        };
-        return (
-          <div
-            key={index}
-            style={style}
-          >
-            {/* {bar.id} */}
-          </div>
-        )
-      })}
-    </div>
-  );
+    return (
+      <div className="bars">
+        {bars.map((bar, index) => {
+          // calculate height 
+          const height = (bar / bars.length) * (containerHeight - 100);
+
+          // set the background and border based on coloursMap
+          let background = coloursMap['default'].background;
+          let border = coloursMap['default'].border;
+          if (compare.includes(index)) {
+            background = coloursMap['compare'].background;
+            border = coloursMap['compare'].border;
+          }
+          if (swap.includes(index)) {
+            background = coloursMap['swap'].background;
+            border = coloursMap['swap'].border;
+          }
+          if (sorted.includes(index)) {
+            background = coloursMap['sorted'].background;
+            border = coloursMap['sorted'].border;
+          }
+
+          const style = {
+            border: `0.3rem solid ${border}`,
+            width: barWidth,
+            height: `${height}px`,
+            background: background
+          };
+
+          return (
+            <div
+              key={index}
+                style={style}
+              >
+            </div>
+          )
+        })}
+      </div>
+    )
 }

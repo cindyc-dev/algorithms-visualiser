@@ -17,5 +17,7 @@ export default function InsertionSort(bars) {
   for (let i = 0; i < bars.length; i++) {
       steps.push([null, null, null, i])
   }
+
+  console.log(`insertionSortSteps: ${JSON.stringify(steps)}`);
   return steps
 }

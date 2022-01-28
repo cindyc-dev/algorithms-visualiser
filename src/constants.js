@@ -103,11 +103,11 @@ const sortingColoursMap = {
     background: '#51B8E2',
     border: '#2B6EB2'
   },
-  'comparing': {
+  'compare': {
     background: '#FDAC6A',
     border: '#F77052'
   },
-  'swapping': {
+  'swap': {
     background: '#FFD65A',
     border: '#DAAF2F'
   },
