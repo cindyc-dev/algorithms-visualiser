@@ -10,7 +10,7 @@ export default function Visual({ bars, compare, sorted, swap, coloursMap }) {
     console.log(document.querySelector(`[data-name='visualisation']`).clientHeight);
   }, []) 
   
-  const barWidth = bars.length * containerWidth - 125
+  const barWidth = bars.length * (containerWidth - 125)
 
     return (
       <div className="bars">

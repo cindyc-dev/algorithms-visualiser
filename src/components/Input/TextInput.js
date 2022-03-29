@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function TextInput({label, placeholder, val, setVal}) {
+export default function TextInput({label, placeholder, val, onChange}) {
   return (
     <div className='input-row'>
       <label className="label" >{label}</label>
@@ -9,7 +9,7 @@ export default function TextInput({label, placeholder, val, setVal}) {
         type="text"
         placeholder={placeholder}
         value={val}
-        onChange={e => setVal(e.target.value)}>
+        onChange={onChange}>
       </input>
     </div>
   )

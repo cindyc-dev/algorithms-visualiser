@@ -1,9 +1,17 @@
-import { motion } from 'framer-motion'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 export default function PatternSearchVisual({addArr, text, pattern, orange, green, red}) {
-    const width = (window.innerWidth - 0.2*window.innerWidth)/(text.length+1) - 10
-    const height = "50px"
+  const [containerHeight, setContainerHeight] = useState(100);
+  const [containerWidth, setContainerWidth] = useState(100);
+
+  useEffect(() => {
+    setContainerHeight(document.querySelector(`[data-name='visualisation']`).clientHeight);
+    setContainerWidth(document.querySelector(`[data-name='visualisation']`).clientWidth);
+    console.log(document.querySelector(`[data-name='visualisation']`).clientHeight);
+  }, []) 
+  
+  const width = (containerWidth - 125)/(text.length+1)
+    const height = "3rem"
     const green_color = "#0CD44F"
     const red_color = "#FF003A"
     const orange_color = "#FE5720"
@@ -73,13 +81,11 @@ export default function PatternSearchVisual({addArr, text, pattern, orange, gree
                     return (
                         <div key={index}>
                             <p style={{textAlign: "center"}}>{index}</p>
-                            <motion.div
-                                layout
-                                transition={spring}
+                            <div
                                 style={style}
                             >
                                 {letter}
-                            </motion.div>
+                            </div>
                         </div>
                     )
                 })}
@@ -117,13 +123,11 @@ export default function PatternSearchVisual({addArr, text, pattern, orange, gree
                     }
                     return (
                         <div key={index}>
-                            <motion.div
-                                layout
-                                transition={spring}
+                            <div
                                 style={letter !== " " ? style : fillerStyle}
                             >
                                 {letter}
-                            </motion.div>
+                            </div>
                         </div>
                     )
                 })}

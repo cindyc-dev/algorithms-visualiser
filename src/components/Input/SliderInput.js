@@ -14,7 +14,6 @@ export default function SliderInput({label, min, max, step, val, setVal}) {
         value={val}
         onChange={e => setVal(e.target.value)}
       ></input>
-      {console.log(`sliderInput`)}
     </div>
   );
 }

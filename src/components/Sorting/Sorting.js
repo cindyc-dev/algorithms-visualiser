@@ -23,7 +23,6 @@ export default function Sorting() {
   const [swap, setSwap] = useState([])
   const [sortedIndexes, setSortedIndex] = useState([])
   const [currStep, setCurrStep] = useState(0);
-  const [barsTemp, setBarsTemp] = useState([]);
 
   /* Generates new shuffled array and resets compare, swap and sortedIndexes 
       arrays.
@@ -140,8 +139,8 @@ export default function Sorting() {
                 <TextInput
                   label='array'
                   placeholder='3, 2, 1, ...'
-                  val={barsTemp}
-                  setVal={setBarsTemp}
+                  val={bars.join(', ')}
+                  onChange={e => {console.log(`YES: ${e.target.value}`); setBars(e.target.value.split(", "))}}
                 />
                 <ButtonInput
                   label='GENERATE'

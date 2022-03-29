@@ -63,5 +63,6 @@ export default function BMHSearch(txt, pat) {
             is on the right side of the current
             character. */
     }
+    console.log(`steps: ${JSON.stringify(steps)}`);
     return steps
 }
