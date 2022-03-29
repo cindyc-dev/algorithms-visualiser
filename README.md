@@ -11,7 +11,12 @@
 * 
 
 ## ✨ What it does
-* 
+* Insertion Sort
+  * ![](images/Insertion%20Sort.gif)
+* Quicksort
+  * ![](images/Quicksort.gif)
+* Selection Sort
+  * 
 
 ## 🛠 Tech Stack
 * Frontend was built with [ReactJS]() and has the following dependencies:
