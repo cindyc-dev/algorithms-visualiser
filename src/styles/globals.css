@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.App {
+  position: relative;
+  height: 400px;
+}
+
+.circle {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: red;
+  cursor: grab;
+  transition: background-color 0.3s;
+}
+
+.circle.dragging {
+  cursor: grabbing;
+  background-color: green;
+}
